@@ -5,11 +5,15 @@
  */
 package ballscreator;
 
+import controller.BallsCreatorAdministrator;
+
 /**
  *
  * @author alexander
  */
 public class MainFrame extends javax.swing.JFrame {
+    
+    BallsCreatorAdministrator ballsCreatorAdministrator;
 
     /**
      * Creates new form MainFrame
@@ -39,6 +43,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        pnlDraw.setPreferredSize(new java.awt.Dimension(800, 600));
+
         javax.swing.GroupLayout pnlDrawLayout = new javax.swing.GroupLayout(pnlDraw);
         pnlDraw.setLayout(pnlDrawLayout);
         pnlDrawLayout.setHorizontalGroup(
@@ -63,9 +69,14 @@ public class MainFrame extends javax.swing.JFrame {
 
         btnColor.setText("Color");
         btnColor.setToolTipText("Color de las bolas");
+        btnColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnColorActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnColor);
 
-        cmbDireccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "45", "90", "135" }));
+        cmbDireccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "45", "90", "135", "180", "225", "270", "315" }));
         cmbDireccion.setToolTipText("Dirección inicial de las bolas");
         jPanel1.add(cmbDireccion);
 
@@ -86,6 +97,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColorActionPerformed
+        // TODO add your handling code here:
+        
+        ColorChooser clrChooser = new ColorChooser();
+        clrChooser.setVisible(true);
+    }//GEN-LAST:event_btnColorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,6 +138,10 @@ public class MainFrame extends javax.swing.JFrame {
                 new MainFrame().setVisible(true);
             }
         });
+    }
+    
+    public void setAdministrator(BallsCreatorAdministrator ballsCreatorAdministrator) {
+        this.ballsCreatorAdministrator = ballsCreatorAdministrator;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

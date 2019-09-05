@@ -29,22 +29,44 @@ public class ColorChooser extends javax.swing.JFrame {
 
         clrChooser = new javax.swing.JColorChooser();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnColorAceptar = new javax.swing.JButton();
+        btnColorCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().add(clrChooser, java.awt.BorderLayout.CENTER);
 
-        jButton1.setText("Aceptar");
-        jPanel1.add(jButton1);
+        btnColorAceptar.setText("Aceptar");
+        btnColorAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnColorAceptarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnColorAceptar);
 
-        jButton2.setText("Cancelar");
-        jPanel1.add(jButton2);
+        btnColorCancelar.setText("Cancelar");
+        btnColorCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnColorCancelarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnColorCancelar);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnColorAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColorAceptarActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_btnColorAceptarActionPerformed
+
+    private void btnColorCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColorCancelarActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_btnColorCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -82,9 +104,9 @@ public class ColorChooser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnColorAceptar;
+    private javax.swing.JButton btnColorCancelar;
     private javax.swing.JColorChooser clrChooser;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
