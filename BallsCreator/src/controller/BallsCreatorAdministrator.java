@@ -6,6 +6,7 @@
 package controller;
 
 import ballscreator.MainFrame;
+import model.caja.SingletonCaja;
 
 /**
  *
@@ -13,8 +14,11 @@ import ballscreator.MainFrame;
  */
 public class BallsCreatorAdministrator {
     MainFrame mainFrame;
+    
+    SingletonCaja caja;
 
     public BallsCreatorAdministrator() {
+        caja = SingletonCaja.getCaja();
     }
     
     public void setMainFrame(MainFrame mainFrame) {
@@ -23,5 +27,13 @@ public class BallsCreatorAdministrator {
 
     public MainFrame getMainFrame() {
         return mainFrame;
+    }
+    
+    public void setMaxX (int maxX) {
+        caja.setMaxx(maxX);
+    }
+    
+    public void setMaxY (int maxY) {
+        caja.setMaxy(maxY);
     }
 }

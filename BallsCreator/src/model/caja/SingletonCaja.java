@@ -6,8 +6,6 @@
 package model.caja;
 
 import model.bola.BolaMovible;
-import ballscreator.dibujable.BolaMovibleDibujable;
-import model.bola.IBola;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +16,7 @@ public class SingletonCaja{
     private static SingletonCaja caja;
     
     private int minx, miny, maxx, maxy;
-    private final ArrayList<IBola> bolas;
+    private final ArrayList<BolaMovible> bolas;
     
     private SingletonCaja(){
         minx = 0;
@@ -40,10 +38,12 @@ public class SingletonCaja{
     }
 
     public void setMinx(int minx) {
-        this.minx = minx;
-        bolas.forEach((bola) -> {
-            ((BolaMovible)bola).setMinx(minx);
-        });
+        if (this.minx != minx) {
+            this.minx = minx;
+            bolas.forEach((bola) -> {
+                bola.setMinx(minx);
+            });
+        }
     }
 
     public int getMiny() {
@@ -51,10 +51,12 @@ public class SingletonCaja{
     }
 
     public void setMiny(int miny) {
-        this.miny = miny;
-        bolas.forEach((bola) -> {
-            ((BolaMovible)bola).setMiny(miny);
-        });
+        if (this.miny != miny) {
+            this.miny = miny;
+            bolas.forEach((bola) -> {
+                bola.setMiny(miny);
+            });
+        }
     }
 
     public int getMaxx() {
@@ -62,10 +64,12 @@ public class SingletonCaja{
     }
 
     public void setMaxx(int maxx) {
-        this.maxx = maxx;
-        bolas.forEach((bola) -> {
-            ((BolaMovible)bola).setMaxx(maxx);
-        });
+        if (this.maxx != maxx) {
+            this.maxx = maxx;
+            bolas.forEach((bola) -> {
+                ((BolaMovible)bola).setMaxx(maxx);
+            });
+        }
     }
 
     public int getMaxy() {
@@ -73,10 +77,12 @@ public class SingletonCaja{
     }
 
     public void setMaxy(int maxy) {
-        this.maxy = maxy;
-        bolas.forEach((bola) -> {
-            ((BolaMovible)bola).setMaxy(maxy);
-        });
+        if (this.maxy != maxy) {
+            this.maxy = maxy;
+            bolas.forEach((bola) -> {
+                bola.setMaxy(maxy);
+            });
+        }
     }
     
     public void addBola(BolaMovible bola){
@@ -90,10 +96,10 @@ public class SingletonCaja{
     public void borrarBolas(){
         bolas.clear();
     }
-
-    public synchronized void dibujarBolas() {
+    
+    public void moverBolas() {
         bolas.forEach((bola) -> {
-            ((BolaMovibleDibujable)bola).dibujar();
+            bola.moverEnCaja();
         });
     }
 }

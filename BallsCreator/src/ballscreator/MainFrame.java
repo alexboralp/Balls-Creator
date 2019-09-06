@@ -5,7 +5,12 @@
  */
 package ballscreator;
 
+import ballscreator.dibujable.BolaMovibleDibujable;
 import controller.BallsCreatorAdministrator;
+import java.awt.Color;
+import java.util.ArrayList;
+import javax.swing.JColorChooser;
+import javax.swing.JFrame;
 
 /**
  *
@@ -14,12 +19,15 @@ import controller.BallsCreatorAdministrator;
 public class MainFrame extends javax.swing.JFrame {
     
     BallsCreatorAdministrator ballsCreatorAdministrator;
+    Color color;
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
+        
+        color = btnColor.getBackground();
     }
 
     /**
@@ -42,8 +50,14 @@ public class MainFrame extends javax.swing.JFrame {
         btnCrear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         pnlDraw.setPreferredSize(new java.awt.Dimension(800, 600));
+        pnlDraw.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnlDrawComponentResized(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlDrawLayout = new javax.swing.GroupLayout(pnlDraw);
         pnlDraw.setLayout(pnlDrawLayout);
@@ -86,7 +100,7 @@ public class MainFrame extends javax.swing.JFrame {
         spnVelocidad.setPreferredSize(new java.awt.Dimension(60, 20));
         jPanel1.add(spnVelocidad);
 
-        cmbMetodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Factory", "Prototype" }));
+        cmbMetodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prototype", "Factory", "Builder", "Pool" }));
         cmbMetodo.setToolTipText("Patrón que se utilizará para crear las bolas");
         jPanel1.add(cmbMetodo);
 
@@ -101,9 +115,15 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColorActionPerformed
         // TODO add your handling code here:
         
-        ColorChooser clrChooser = new ColorChooser();
-        clrChooser.setVisible(true);
+        color = JColorChooser.showDialog(this, "Elija un color", color);
+        btnColor.setBackground(color);
     }//GEN-LAST:event_btnColorActionPerformed
+
+    private void pnlDrawComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlDrawComponentResized
+        // TODO add your handling code here:
+        ballsCreatorAdministrator.setMaxX(pnlDraw.getWidth());
+        ballsCreatorAdministrator.setMaxX(pnlDraw.getHeight());
+    }//GEN-LAST:event_pnlDrawComponentResized
 
     /**
      * @param args the command line arguments
@@ -142,6 +162,14 @@ public class MainFrame extends javax.swing.JFrame {
     
     public void setAdministrator(BallsCreatorAdministrator ballsCreatorAdministrator) {
         this.ballsCreatorAdministrator = ballsCreatorAdministrator;
+        ballsCreatorAdministrator.setMaxX(pnlDraw.getWidth());
+        ballsCreatorAdministrator.setMaxX(pnlDraw.getHeight());
+    }
+
+    public synchronized void dibujarBolas(ArrayList<BolaMovibleDibujable> bolas) {
+        bolas.forEach((bola) -> {
+            bola.dibujar();
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

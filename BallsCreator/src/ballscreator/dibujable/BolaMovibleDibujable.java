@@ -11,9 +11,6 @@ import model.punto.Punto;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import ballscreator.dibujable.IDibujable;
 
 /**
  *
@@ -21,7 +18,7 @@ import ballscreator.dibujable.IDibujable;
  */
 public class BolaMovibleDibujable extends BolaMovible implements IDibujable, Runnable{
     Color color;
-    GraphicsContext gc;
+    GraphicsContext2D gc;
 
     public BolaMovibleDibujable(Punto centro, int radio, int velocidad, Direccion direccion, Color color, GraphicsContext gc) {
         super(centro, radio, velocidad, direccion);

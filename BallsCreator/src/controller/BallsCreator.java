@@ -54,9 +54,9 @@ public class BallsCreator {
                 mainFrame = new MainFrame();
                 mainFrame.setTitle("ComboStar");
                 mainFrame.setSize(800, 600);
+                mainFrame.setVisible(true);
                 mainFrame.setAdministrator(administrator);
                 administrator.setMainFrame(mainFrame);
-                mainFrame.setVisible(true);
             }
         });
     }
