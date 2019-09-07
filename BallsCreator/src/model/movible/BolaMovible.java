@@ -3,21 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.bola;
+package model.movible;
 
+import model.bola.Bola;
 import model.punto.Punto;
-import model.movible.IMovible;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author aborbon
  */
-public class BolaMovible extends Bola implements IMovible{
+public class BolaMovible extends Bola implements IMovible, Runnable{
     
     public enum Direccion {Angulo0, Angulo45, Angulo90, Angulo135, Angulo180, Angulo225, Angulo270, Angulo315}
     
     private int velocidad;
-    private int velocidadx, velocidady;
+    private int pasox, pasoy;
     private Direccion direccion;
     private int minx, miny, maxx, maxy;
 
@@ -108,8 +111,8 @@ public class BolaMovible extends Bola implements IMovible{
     
     @Override
     public synchronized void mover(){
-        this.getCentro().setX( this.getCentro().getX() + velocidadx );
-        this.getCentro().setY( this.getCentro().getY() + velocidady );
+        this.getCentro().setX( this.getCentro().getX() + pasox );
+        this.getCentro().setY( this.getCentro().getY() + pasoy );
     }
     
     public synchronized void moverEnCaja() {
@@ -117,14 +120,14 @@ public class BolaMovible extends Bola implements IMovible{
         mover();
 
         // Si se salió de los límites de la caja
-        if ( ( this.getCentro().getX() <= minx && velocidadx < 0 ) ||
-             ( this.getCentro().getX() >= maxx && velocidadx > 0 ) ){
-            velocidadx *= -1;
+        if ( ( this.getCentro().getX() <= minx && pasox < 0 ) ||
+             ( this.getCentro().getX() >= maxx && pasox > 0 ) ){
+            pasox *= -1;
         }
         
-        if ( ( this.getCentro().getY() <= miny && velocidady < 0 ) ||
-             ( this.getCentro().getY() >= maxy && velocidady > 0 ) ){
-            velocidady *= -1;
+        if ( ( this.getCentro().getY() <= miny && pasoy < 0 ) ||
+             ( this.getCentro().getY() >= maxy && pasoy > 0 ) ){
+            pasoy *= -1;
         }
         
     }
@@ -142,37 +145,51 @@ public class BolaMovible extends Bola implements IMovible{
     private void setVelocidades(Direccion direccion) {
         switch (direccion) {
             case Angulo0:
-                velocidadx = velocidad;
-                velocidady = 0;
+                pasox = velocidad;
+                pasoy = 0;
                 break;
             case Angulo45:
-                velocidadx = velocidad;
-                velocidady = velocidad;
+                pasox = velocidad;
+                pasoy = velocidad;
                 break;
             case Angulo90:
-                velocidadx = 0;
-                velocidady = velocidad;
+                pasox = 0;
+                pasoy = velocidad;
                 break;
             case Angulo135:
-                velocidadx = -1 * velocidad;
-                velocidady = velocidad;
+                pasox = -1 * velocidad;
+                pasoy = velocidad;
                 break;
             case Angulo180:
-                velocidadx = -1 * velocidad;
-                velocidady = 0;
+                pasox = -1 * velocidad;
+                pasoy = 0;
                 break;
             case Angulo225:
-                velocidadx = -1 * velocidad;
-                velocidady = -1 * velocidad;
+                pasox = -1 * velocidad;
+                pasoy = -1 * velocidad;
                 break;
             case Angulo270:
-                velocidadx = 0;
-                velocidady = -1 * velocidad;
+                pasox = 0;
+                pasoy = -1 * velocidad;
                 break;
             case Angulo315:
-                velocidadx = velocidad;
-                velocidady = -1 * velocidad;
+                pasox = velocidad;
+                pasoy = -1 * velocidad;
                 break;
+        }
+    }
+    
+    
+    @Override
+    public void run() {
+        while(true){
+            moverEnCaja();
+            
+            try {
+                sleep(1000/Math.abs(velocidad));
+            } catch (InterruptedException ex) {
+                Logger.getLogger(BolaMovible.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     

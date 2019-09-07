@@ -5,7 +5,7 @@
  */
 package bolasencaja;
 
-import model.bola.BolaMovible.Direccion;
+import model.movible.BolaMovible.Direccion;
 import ballscreator.dibujable.BolaMovibleDibujable;
 import ballscreator.dibujable.CajaDibujable;
 import model.caja.SingletonCaja;

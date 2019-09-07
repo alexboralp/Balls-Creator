@@ -5,10 +5,12 @@
  */
 package ballscreator.dibujable;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author aborbon
  */
 public interface IDibujable {
-    public void dibujar();
+    public void dibujar(JPanel jpanel);
 }

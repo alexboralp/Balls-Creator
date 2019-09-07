@@ -10,7 +10,6 @@ import controller.BallsCreatorAdministrator;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JColorChooser;
-import javax.swing.JFrame;
 
 /**
  *
@@ -50,7 +49,6 @@ public class MainFrame extends javax.swing.JFrame {
         btnCrear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         pnlDraw.setPreferredSize(new java.awt.Dimension(800, 600));
         pnlDraw.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -90,11 +88,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btnColor);
 
-        cmbDireccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "45", "90", "135", "180", "225", "270", "315" }));
+        cmbDireccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "45", "90", "135", "180", "225", "270", "315", "Aleatorio" }));
         cmbDireccion.setToolTipText("Dirección inicial de las bolas");
         jPanel1.add(cmbDireccion);
 
-        spnVelocidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1, 10));
+        spnVelocidad.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1, 10));
         spnVelocidad.setToolTipText("Velocidad inicial de las bolas");
         spnVelocidad.setMinimumSize(new java.awt.Dimension(100, 20));
         spnVelocidad.setPreferredSize(new java.awt.Dimension(60, 20));
@@ -105,6 +103,11 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.add(cmbMetodo);
 
         btnCrear.setText("Crear");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnCrear);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
@@ -124,6 +127,17 @@ public class MainFrame extends javax.swing.JFrame {
         ballsCreatorAdministrator.setMaxX(pnlDraw.getWidth());
         ballsCreatorAdministrator.setMaxX(pnlDraw.getHeight());
     }//GEN-LAST:event_pnlDrawComponentResized
+
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        // TODO add your handling code here:
+        int cantidad  = (int) spnCantidad.getValue();
+        int velocidad = (int) spnVelocidad.getValue();
+        String dir = (String)cmbDireccion.getSelectedItem();
+        if ( dir == null || "".equals(dir) )
+            dir = "Aleatorio";
+        String metodo = (String)cmbMetodo.getSelectedItem();
+        ballsCreatorAdministrator.createBalls(cantidad, color, dir, velocidad, metodo);
+    }//GEN-LAST:event_btnCrearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,8 +181,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public synchronized void dibujarBolas(ArrayList<BolaMovibleDibujable> bolas) {
+        pnlDraw.repaint();
         bolas.forEach((bola) -> {
-            bola.dibujar();
+            bola.dibujar(pnlDraw);
         });
     }
 

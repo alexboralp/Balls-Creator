@@ -5,14 +5,11 @@
  */
 package ballscreator.dibujable;
 
+import java.awt.Color;
 import model.factory.FactoryPuntos;
-import model.factory.IFactoryPuntos;
-import model.bola.BolaMovible;
-import ballscreator.dibujable.BolaMovibleDibujable;
+import model.movible.BolaMovible;
 import model.bola.IBola;
 import model.punto.Punto;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 /**
  *
@@ -21,14 +18,13 @@ import javafx.scene.paint.Color;
 public class FactoryBolaMovibleDibujable implements IFactoryBolaMovibleDibujable {
 
     @Override
-    public IBola construirBolaMovibleDibujable(Punto centro, int radio, int velocidad, BolaMovible.Direccion direccion, Color color, GraphicsContext gc) {
-        return new BolaMovibleDibujable(centro, radio, velocidad, direccion, color, gc);
+    public IBola construirBolaMovibleDibujable(Punto centro, int radio, int velocidad, BolaMovible.Direccion direccion, Color color) {
+        return new BolaMovibleDibujable(centro, radio, velocidad, direccion, color);
     }
 
     @Override
-    public IBola construirBolaMovibleDibujable(int xCentro, int yCentro, int radio, int velocidad, BolaMovible.Direccion direccion, Color color, GraphicsContext gc) {
-        IFactoryPuntos creador = new FactoryPuntos();
-        return new BolaMovibleDibujable(creador.crearPunto(xCentro, yCentro), radio, velocidad, direccion, color, gc);
+    public IBola construirBolaMovibleDibujable(int xCentro, int yCentro, int radio, int velocidad, BolaMovible.Direccion direccion, Color color) {
+        return new BolaMovibleDibujable(FactoryPuntos.crearPunto(xCentro, yCentro), radio, velocidad, direccion, color);
     }
     
 }
