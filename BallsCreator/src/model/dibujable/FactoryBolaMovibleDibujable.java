@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ballscreator.dibujable;
+package model.dibujable;
 
 import java.awt.Color;
 import model.factory.FactoryPuntos;

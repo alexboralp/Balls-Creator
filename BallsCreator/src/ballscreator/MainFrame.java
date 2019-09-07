@@ -5,7 +5,7 @@
  */
 package ballscreator;
 
-import ballscreator.dibujable.BolaMovibleDibujable;
+import model.dibujable.BolaMovibleDibujable;
 import controller.BallsCreatorAdministrator;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -98,7 +98,7 @@ public class MainFrame extends javax.swing.JFrame {
         spnVelocidad.setPreferredSize(new java.awt.Dimension(60, 20));
         jPanel1.add(spnVelocidad);
 
-        cmbMetodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prototype", "Factory", "Builder", "Pool" }));
+        cmbMetodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PROTOTYPE", "FACTORY", "BUILDER", "POOL" }));
         cmbMetodo.setToolTipText("Patrón que se utilizará para crear las bolas");
         jPanel1.add(cmbMetodo);
 
@@ -185,6 +185,22 @@ public class MainFrame extends javax.swing.JFrame {
         bolas.forEach((bola) -> {
             bola.dibujar(pnlDraw);
         });
+    }
+    
+    public int getminX() {
+        return 0;
+    }
+    
+    public int getminY() {
+        return 0;
+    }
+    
+    public int getmaxX() {
+        return pnlDraw.getWidth();
+    }
+    
+    public int getmaxY() {
+        return pnlDraw.getHeight();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

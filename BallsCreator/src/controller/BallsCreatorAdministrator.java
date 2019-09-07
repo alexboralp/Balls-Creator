@@ -6,10 +6,12 @@
 package controller;
 
 import ballscreator.MainFrame;
-import ballscreator.dibujable.BolaMovibleDibujable;
+import model.dibujable.BolaMovibleDibujable;
+import model.dibujable.PrototypeFactoryBolasDibujables;
 import java.awt.Color;
 import java.util.ArrayList;
 import model.movible.BolaMovible.Direccion;
+import model.punto.Punto;
 import model.util.Util;
 
 /**
@@ -17,8 +19,10 @@ import model.util.Util;
  * @author aborbon
  */
 public class BallsCreatorAdministrator implements Runnable{
-    MainFrame mainFrame;
-    ArrayList<BolaMovibleDibujable> bolas;
+    public enum Factories { FACTORY, PROTOTYPE, BUILDER, POOL, NONE };
+    
+    private MainFrame mainFrame;
+    private ArrayList<BolaMovibleDibujable> bolas;
 
     public BallsCreatorAdministrator() {    
         bolas = new ArrayList();
@@ -32,10 +36,10 @@ public class BallsCreatorAdministrator implements Runnable{
         return mainFrame;
     }
     
-    public void createBalls(int cantidad, Color color, String direccion, int velocidad, String metodo) {
+    public void createBalls(int cantidad, Color color, String direccion, int velocidad, String constructor) {
         long starttime = System.nanoTime();
         
-        Direccion dir;
+        Direccion dir = Direccion.Angulo0;
         
         for (int i = 0; i < cantidad; i++){
             if ("ALEATORIO".equals(direccion)){
@@ -73,31 +77,29 @@ public class BallsCreatorAdministrator implements Runnable{
                             Util.randomInt(caja.getMinx(), caja.getMaxx()), 
                             Util.randomInt(caja.getMiny(), caja.getMaxy()),
                             Util.randomInt(minTamanno, maxTamanno), 
-                            vel, direccion, color, 
-                            cnvCaja.getGraphicsContext2D());
+                            velocidad, direccion, color);
                 
             }else if ( constructor.equals(Factories.PROTOTYPE.toString()) ){
                 //System.out.println("Creando con Prototype");
                 
-                bola = (BolaMovibleDibujable)PrototypeFactoryBolasDibujables.getPrototype("bola").deepclone();
+                bola = PrototypeFactoryBolasDibujables.getPrototype("bola").deepclone();
                         
-                bola.setCentro(new Punto(Util.randomInt(caja.getMinx(), caja.getMaxx()), 
-                            Util.randomInt(caja.getMiny(), caja.getMaxy())));
-                bola.setRadio(Util.randomInt(minTamanno, maxTamanno));
-                bola.setVelocidad(vel);
-                bola.setDireccion(direccion);
+                bola.setCentro(new Punto(Util.randomInt(mainFrame.getminX(), mainFrame.getmaxX()), 
+                            Util.randomInt(mainFrame.getminY(), mainFrame.getmaxY())));
+                bola.setRadio(5); //Util.randomInt(minTamanno, maxTamanno));
+                bola.setVelocidad(velocidad);
+                bola.setDireccion(dir);
                 bola.setColor(color);
             }else{
                 //System.out.println("Creando con new");
                 bola = new BolaMovibleDibujable(
-                            Util.randomInt(caja.getMinx(), caja.getMaxx()), 
-                            Util.randomInt(caja.getMiny(), caja.getMaxy()),
-                            Util.randomInt(minTamanno, maxTamanno), 
-                            vel, direccion, color, 
-                            cnvCaja.getGraphicsContext2D());
+                            Util.randomInt(mainFrame.getminX(), mainFrame.getmaxX()), 
+                            Util.randomInt(mainFrame.getminY(), mainFrame.getmaxY()),
+                            5, //Util.randomInt(minTamanno, maxTamanno), 
+                            velocidad, dir, color);
             }
             
-            caja.addBola(bola);
+            bolas.add(bola);
             new Thread(bola).start();
         }
         

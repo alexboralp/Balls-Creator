@@ -6,12 +6,12 @@
 package bolasencaja;
 
 import model.movible.BolaMovible.Direccion;
-import ballscreator.dibujable.BolaMovibleDibujable;
+import model.dibujable.BolaMovibleDibujable;
 import ballscreator.dibujable.CajaDibujable;
 import model.caja.SingletonCaja;
-import ballscreator.dibujable.FactoryBolaMovibleDibujable;
-import ballscreator.dibujable.IFactoryBolaMovibleDibujable;
-import ballscreator.dibujable.PrototypeFactoryBolasDibujables;
+import model.dibujable.FactoryBolaMovibleDibujable;
+import model.dibujable.IFactoryBolaMovibleDibujable;
+import model.dibujable.PrototypeFactoryBolasDibujables;
 import model.punto.Punto;
 import model.util.Util;
 import java.net.URL;
