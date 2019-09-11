@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.dibujable;
+package ballscreator.dibujable;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import model.movible.BolaMovible;
 import model.punto.Punto;
-import javax.swing.JPanel;
 
 /**
  *
@@ -35,15 +34,15 @@ public class BolaMovibleDibujable extends BolaMovible implements IDibujable{
     }
 
     @Override
-    public synchronized void dibujar(JPanel pnlDraw) {
+    public void dibujar(Graphics g) {
         
-        int x = this.getCentro().getX() - this.getRadio();
-        int y = this.getCentro().getY() - this.getRadio();
-        Graphics graphics = pnlDraw.getGraphics();
-        graphics.setColor(color);//.setFill(color);
-        graphics.fillOval(x, y, 2 * this.getRadio(), 2 * this.getRadio());
+        int radio = this.getRadio();
+        int x = this.getCentro().getX() - radio;
+        int y = this.getCentro().getY() - radio;
+        g.setColor(color);//.setFill(color);
+        g.fillOval(x, y, 2 * radio, 2 * radio);
         
-        //System.out.println("Me estoy dibujando con valores: " + x + ", " + y + ", " + (x + 2 * rad) + ", " + ( y + 2 * rad ));
+        System.out.println("Me estoy dibujando con valores: " + x + ", " + y + ", " + (x + 2 * radio) + ", " + ( y + 2 * radio ));
     }
 
     public Color getColor() {

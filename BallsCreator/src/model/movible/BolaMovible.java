@@ -145,36 +145,36 @@ public class BolaMovible extends Bola implements IMovible, Runnable{
     private void setVelocidades(Direccion direccion) {
         switch (direccion) {
             case Angulo0:
-                pasox = velocidad;
+                pasox = 1;
                 pasoy = 0;
                 break;
             case Angulo45:
-                pasox = velocidad;
-                pasoy = velocidad;
+                pasox = 1;
+                pasoy = 1;
                 break;
             case Angulo90:
                 pasox = 0;
-                pasoy = velocidad;
+                pasoy = 1;
                 break;
             case Angulo135:
-                pasox = -1 * velocidad;
-                pasoy = velocidad;
+                pasox = -1;
+                pasoy = 1;
                 break;
             case Angulo180:
-                pasox = -1 * velocidad;
+                pasox = -1;
                 pasoy = 0;
                 break;
             case Angulo225:
-                pasox = -1 * velocidad;
-                pasoy = -1 * velocidad;
+                pasox = -1;
+                pasoy = -1;
                 break;
             case Angulo270:
                 pasox = 0;
-                pasoy = -1 * velocidad;
+                pasoy = -1;
                 break;
             case Angulo315:
-                pasox = velocidad;
-                pasoy = -1 * velocidad;
+                pasox = 1;
+                pasoy = -1;
                 break;
         }
     }
@@ -186,7 +186,7 @@ public class BolaMovible extends Bola implements IMovible, Runnable{
             moverEnCaja();
             
             try {
-                sleep(1000/Math.abs(velocidad));
+                sleep(100/Math.abs(velocidad));
             } catch (InterruptedException ex) {
                 Logger.getLogger(BolaMovible.class.getName()).log(Level.SEVERE, null, ex);
             }

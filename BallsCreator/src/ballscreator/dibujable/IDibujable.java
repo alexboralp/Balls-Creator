@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.dibujable;
+package ballscreator.dibujable;
 
-import javax.swing.JPanel;
+import java.awt.Graphics;
 
 /**
  *
  * @author aborbon
  */
 public interface IDibujable {
-    public void dibujar(JPanel jpanel);
+    public void dibujar(Graphics g);
 }

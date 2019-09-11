@@ -5,10 +5,10 @@
  */
 package ballscreator;
 
-import model.dibujable.BolaMovibleDibujable;
+import ballscreator.dibujable.BolaMovibleDibujable;
+import ballscreator.dibujable.JPanelCaja;
 import controller.BallsCreatorAdministrator;
 import java.awt.Color;
-import java.util.ArrayList;
 import javax.swing.JColorChooser;
 
 /**
@@ -19,6 +19,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     BallsCreatorAdministrator ballsCreatorAdministrator;
     Color color;
+    JPanelCaja pnlDraw;
 
     /**
      * Creates new form MainFrame
@@ -27,6 +28,31 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         
         color = btnColor.getBackground();
+        
+        pnlDraw = new JPanelCaja();
+        pnlDraw.setDoubleBuffered(true);
+        pnlDraw.setPreferredSize(new java.awt.Dimension(800, 600));
+        /*pnlDraw.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                pnlDrawComponentResized(evt);
+            }
+        });*/
+        /*javax.swing.GroupLayout pnlDrawLayout = new javax.swing.GroupLayout(pnlDraw);
+        pnlDraw.setLayout(pnlDrawLayout);
+        pnlDrawLayout.setHorizontalGroup(
+            pnlDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 746, Short.MAX_VALUE)
+        );
+        pnlDrawLayout.setVerticalGroup(
+            pnlDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );*/
+
+        getContentPane().add(pnlDraw, java.awt.BorderLayout.CENTER);
+        pnlDraw.setMaxX(pnlDraw.getWidth());
+        pnlDraw.setMaxY(pnlDraw.getHeight());
+        
     }
 
     /**
@@ -38,7 +64,6 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlDraw = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         spnCantidad = new javax.swing.JSpinner();
@@ -50,33 +75,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlDraw.setPreferredSize(new java.awt.Dimension(800, 600));
-        pnlDraw.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                pnlDrawComponentResized(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlDrawLayout = new javax.swing.GroupLayout(pnlDraw);
-        pnlDraw.setLayout(pnlDrawLayout);
-        pnlDrawLayout.setHorizontalGroup(
-            pnlDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 746, Short.MAX_VALUE)
-        );
-        pnlDrawLayout.setVerticalGroup(
-            pnlDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(pnlDraw, java.awt.BorderLayout.CENTER);
-
         jLabel1.setText("Características:");
         jPanel1.add(jLabel1);
 
-        spnCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        spnCantidad.setModel(new javax.swing.SpinnerNumberModel(1000, 1, null, 1));
         spnCantidad.setToolTipText("Cantidad de bolas");
         spnCantidad.setMinimumSize(new java.awt.Dimension(100, 20));
-        spnCantidad.setPreferredSize(new java.awt.Dimension(60, 20));
+        spnCantidad.setPreferredSize(new java.awt.Dimension(70, 21));
         jPanel1.add(spnCantidad);
 
         btnColor.setText("Color");
@@ -90,16 +95,18 @@ public class MainFrame extends javax.swing.JFrame {
 
         cmbDireccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "45", "90", "135", "180", "225", "270", "315", "Aleatorio" }));
         cmbDireccion.setToolTipText("Dirección inicial de las bolas");
+        cmbDireccion.setMinimumSize(new java.awt.Dimension(70, 21));
         jPanel1.add(cmbDireccion);
 
         spnVelocidad.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1, 10));
         spnVelocidad.setToolTipText("Velocidad inicial de las bolas");
         spnVelocidad.setMinimumSize(new java.awt.Dimension(100, 20));
-        spnVelocidad.setPreferredSize(new java.awt.Dimension(60, 20));
+        spnVelocidad.setPreferredSize(new java.awt.Dimension(70, 21));
         jPanel1.add(spnVelocidad);
 
-        cmbMetodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PROTOTYPE", "FACTORY", "BUILDER", "POOL" }));
+        cmbMetodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PROTOTYPE", "FACTORY", "BUILDER", "POOL", "NEW" }));
         cmbMetodo.setToolTipText("Patrón que se utilizará para crear las bolas");
+        cmbMetodo.setMinimumSize(new java.awt.Dimension(83, 21));
         jPanel1.add(cmbMetodo);
 
         btnCrear.setText("Crear");
@@ -122,12 +129,6 @@ public class MainFrame extends javax.swing.JFrame {
         btnColor.setBackground(color);
     }//GEN-LAST:event_btnColorActionPerformed
 
-    private void pnlDrawComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_pnlDrawComponentResized
-        // TODO add your handling code here:
-        ballsCreatorAdministrator.setMaxX(pnlDraw.getWidth());
-        ballsCreatorAdministrator.setMaxX(pnlDraw.getHeight());
-    }//GEN-LAST:event_pnlDrawComponentResized
-
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
         int cantidad  = (int) spnCantidad.getValue();
@@ -139,6 +140,13 @@ public class MainFrame extends javax.swing.JFrame {
         ballsCreatorAdministrator.createBalls(cantidad, color, dir, velocidad, metodo);
     }//GEN-LAST:event_btnCrearActionPerformed
 
+    /*private void pnlDrawComponentResized(java.awt.event.ComponentEvent evt) {                                         
+        // TODO add your handling code here:
+        
+        pnlDraw.setMaxX(pnlDraw.getWidth());
+        pnlDraw.setMaxX(pnlDraw.getHeight());
+    }  */
+    
     /**
      * @param args the command line arguments
      */
@@ -176,15 +184,14 @@ public class MainFrame extends javax.swing.JFrame {
     
     public void setAdministrator(BallsCreatorAdministrator ballsCreatorAdministrator) {
         this.ballsCreatorAdministrator = ballsCreatorAdministrator;
-        ballsCreatorAdministrator.setMaxX(pnlDraw.getWidth());
-        ballsCreatorAdministrator.setMaxX(pnlDraw.getHeight());
+        /*if (pnlDraw != null) {
+            ballsCreatorAdministrator.setMaxX(pnlDraw.getWidth());
+            ballsCreatorAdministrator.setMaxX(pnlDraw.getHeight());
+        }*/
     }
 
-    public synchronized void dibujarBolas(ArrayList<BolaMovibleDibujable> bolas) {
+    public synchronized void dibujarBolas() {
         pnlDraw.repaint();
-        bolas.forEach((bola) -> {
-            bola.dibujar(pnlDraw);
-        });
     }
     
     public int getminX() {
@@ -202,6 +209,10 @@ public class MainFrame extends javax.swing.JFrame {
     public int getmaxY() {
         return pnlDraw.getHeight();
     }
+    
+    public void addBall(BolaMovibleDibujable bola) {
+        pnlDraw.addBall(bola);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnColor;
@@ -210,7 +221,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbMetodo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel pnlDraw;
     private javax.swing.JSpinner spnCantidad;
     private javax.swing.JSpinner spnVelocidad;
     // End of variables declaration//GEN-END:variables

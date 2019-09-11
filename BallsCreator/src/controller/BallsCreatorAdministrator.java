@@ -6,10 +6,15 @@
 package controller;
 
 import ballscreator.MainFrame;
-import model.dibujable.BolaMovibleDibujable;
-import model.dibujable.PrototypeFactoryBolasDibujables;
+import ballscreator.dibujable.BolaMovibleDibujable;
+import ballscreator.dibujable.FactoryBolaMovibleDibujable;
+import ballscreator.dibujable.IFactoryBolaMovibleDibujable;
+import ballscreator.dibujable.PrototypeFactoryBolasDibujables;
 import java.awt.Color;
+/*import static java.lang.Thread.sleep;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;*/
 import model.movible.BolaMovible.Direccion;
 import model.punto.Punto;
 import model.util.Util;
@@ -21,11 +26,19 @@ import model.util.Util;
 public class BallsCreatorAdministrator implements Runnable{
     public enum Factories { FACTORY, PROTOTYPE, BUILDER, POOL, NONE };
     
+    private final int tamanno = 5;
+    
     private MainFrame mainFrame;
-    private ArrayList<BolaMovibleDibujable> bolas;
+    //private ArrayList<BolaMovibleDibujable> bolas;
+    Thread thread;
 
     public BallsCreatorAdministrator() {    
-        bolas = new ArrayList();
+        //bolas = new ArrayList();
+        thread = new Thread(this);
+    }
+    
+    public void startThread() {
+        thread.start();
     }
     
     public void setMainFrame(MainFrame mainFrame) {
@@ -39,68 +52,60 @@ public class BallsCreatorAdministrator implements Runnable{
     public void createBalls(int cantidad, Color color, String direccion, int velocidad, String constructor) {
         long starttime = System.nanoTime();
         
-        Direccion dir = Direccion.Angulo0;
+        Direccion dir = strToDireccion(direccion);
+        
+        String nombrePrototipo = "" + cantidad + color.toString() + direccion + velocidad + constructor;
+        PrototypeFactoryBolasDibujables.addPrototype(nombrePrototipo, new BolaMovibleDibujable(0,0,tamanno,velocidad,dir, color));
+        
+        int vel = velocidad;
         
         for (int i = 0; i < cantidad; i++){
-            if ("ALEATORIO".equals(direccion)){
-                int direc = Util.randomInt(1, 8);
-                switch ( direc ){
-                    case 1: dir = Direccion.Angulo0;
-                            break;
-                    case 2: dir = Direccion.Angulo45;
-                            break;
-                    case 3: dir = Direccion.Angulo90;
-                            break;
-                    case 4: dir = Direccion.Angulo135;
-                            break;
-                    case 5: dir = Direccion.Angulo180;
-                            break;
-                    case 6: dir = Direccion.Angulo225;
-                            break;
-                    case 7: dir = Direccion.Angulo270;
-                            break;
-                    default: dir = Direccion.Angulo315;
-                            break;
-                }
+            if ("Aleatorio".equals(direccion)){
+                dir = strToDireccion(direccion);
             }
 
             if ( velocidad == 0 )
-                velocidad = Util.randomInt(1, 11);
+                vel = Util.randomInt(1, 11);
 
             BolaMovibleDibujable bola;
             
             if ( constructor.equals(Factories.FACTORY.toString()) ){
-                //System.out.println("Creando con Factory");
+                System.out.println("Creando con Factory");
                 IFactoryBolaMovibleDibujable fact = new FactoryBolaMovibleDibujable();
                 
                 bola = (BolaMovibleDibujable)fact.construirBolaMovibleDibujable(
-                            Util.randomInt(caja.getMinx(), caja.getMaxx()), 
-                            Util.randomInt(caja.getMiny(), caja.getMaxy()),
-                            Util.randomInt(minTamanno, maxTamanno), 
-                            velocidad, direccion, color);
+                            Util.randomInt(mainFrame.getminX(), mainFrame.getmaxX()), 
+                            Util.randomInt(mainFrame.getminY(), mainFrame.getmaxY()),
+                            tamanno, //Util.randomInt(minTamanno, maxTamanno), 
+                            vel, dir, color);
                 
             }else if ( constructor.equals(Factories.PROTOTYPE.toString()) ){
-                //System.out.println("Creando con Prototype");
+                System.out.println("Creando con Prototype");
                 
-                bola = PrototypeFactoryBolasDibujables.getPrototype("bola").deepclone();
+                bola = PrototypeFactoryBolasDibujables.getPrototype(nombrePrototipo).deepclone();
                         
                 bola.setCentro(new Punto(Util.randomInt(mainFrame.getminX(), mainFrame.getmaxX()), 
                             Util.randomInt(mainFrame.getminY(), mainFrame.getmaxY())));
-                bola.setRadio(5); //Util.randomInt(minTamanno, maxTamanno));
-                bola.setVelocidad(velocidad);
-                bola.setDireccion(dir);
-                bola.setColor(color);
+                //bola.setRadio(tamanno); //Util.randomInt(minTamanno, maxTamanno));
+                if ( velocidad == 0 ) {
+                    bola.setVelocidad(vel);
+                }
+                //bola.setDireccion(dir);
+                //bola.setColor(color);
             }else{
-                //System.out.println("Creando con new");
+                System.out.println("Creando con new");
                 bola = new BolaMovibleDibujable(
                             Util.randomInt(mainFrame.getminX(), mainFrame.getmaxX()), 
                             Util.randomInt(mainFrame.getminY(), mainFrame.getmaxY()),
-                            5, //Util.randomInt(minTamanno, maxTamanno), 
-                            velocidad, dir, color);
+                            tamanno, //Util.randomInt(minTamanno, maxTamanno), 
+                            vel, dir, color);
             }
+            bola.setMaxx(mainFrame.getmaxX());
+            bola.setMaxy(mainFrame.getmaxY());
             
-            bolas.add(bola);
+            //bolas.add(bola);
             new Thread(bola).start();
+            mainFrame.addBall(bola);
         }
         
         long endtime = System.nanoTime();
@@ -108,9 +113,10 @@ public class BallsCreatorAdministrator implements Runnable{
         
         System.out.println("Tiempo transcurrido del método " + constructor + " en nanosegundos: " + elapsedtime + ", en milisegundos:" + elapsedtime/1000000);
         
+        thread.start();
     }
     
-    public void setMaxX (int maxX) {
+    /*public void setMaxX (int maxX) {
         for (BolaMovibleDibujable bola : bolas) {
             bola.setMaxx(maxX);
         }
@@ -120,12 +126,61 @@ public class BallsCreatorAdministrator implements Runnable{
         for (BolaMovibleDibujable bola : bolas) {
             bola.setMaxy(maxY);
         }
-    }
+    }*/
 
     @Override
     public void run() {
         while(true) {
-            mainFrame.dibujarBolas(bolas);
+            mainFrame.dibujarBolas();
+            /*try {
+                sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(BallsCreatorAdministrator.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
         }
+    }
+    
+    private Direccion strToDireccion(String dir) {
+        Direccion direccion = Direccion.Angulo0;
+        
+        switch (dir) {
+            case "Aleatorio":
+                int direc = Util.randomInt(1, 8);
+                switch ( direc ){
+                        case 1: direccion = Direccion.Angulo0;
+                                break;
+                        case 2: direccion = Direccion.Angulo45;
+                                break;
+                        case 3: direccion = Direccion.Angulo90;
+                                break;
+                        case 4: direccion = Direccion.Angulo135;
+                                break;
+                        case 5: direccion = Direccion.Angulo180;
+                                break;
+                        case 6: direccion = Direccion.Angulo225;
+                                break;
+                        case 7: direccion = Direccion.Angulo270;
+                                break;
+                        default: direccion = Direccion.Angulo315;
+                                break;
+                    }
+                break;
+            case "0": direccion = Direccion.Angulo0;
+                                break;
+            case "45": direccion = Direccion.Angulo45;
+                    break;
+            case "90": direccion = Direccion.Angulo90;
+                    break;
+            case "135": direccion = Direccion.Angulo135;
+                    break;
+            case "180": direccion = Direccion.Angulo180;
+                    break;
+            case "225": direccion = Direccion.Angulo225;
+                    break;
+            case "270": direccion = Direccion.Angulo270;
+                    break;
+            default: direccion = Direccion.Angulo315;
+        }
+        return direccion;
     }
 }
