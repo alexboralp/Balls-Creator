@@ -31,9 +31,9 @@ public class JPanelCaja extends JPanel implements ComponentListener{
        super.paintComponent(g);
        g.drawRect(0, 0, this.getWidth() - 1, this.getHeight() - 1);
        for (BolaMovibleDibujable bola : bolas) {
-            g.setColor(bola.getColor());//.setFill(color);
-            g.fillOval(bola.getCentro().getX(), bola.getCentro().getY(), 2 * bola.getRadio(), 2 * bola.getRadio());
-           //bola.dibujar(this);
+           //g.setColor(bola.getColor());//.setFill(color);
+           //g.fillOval(bola.getCentro().getX(), bola.getCentro().getY(), 2 * bola.getRadio(), 2 * bola.getRadio());
+           bola.dibujar(g);
        }
     }
     

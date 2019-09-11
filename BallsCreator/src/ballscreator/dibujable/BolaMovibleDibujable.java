@@ -34,7 +34,7 @@ public class BolaMovibleDibujable extends BolaMovible implements IDibujable{
     }
 
     @Override
-    public void dibujar(Graphics g) {
+        public void dibujar(Graphics g) {
         
         int radio = this.getRadio();
         int x = this.getCentro().getX() - radio;
@@ -42,7 +42,7 @@ public class BolaMovibleDibujable extends BolaMovible implements IDibujable{
         g.setColor(color);//.setFill(color);
         g.fillOval(x, y, 2 * radio, 2 * radio);
         
-        System.out.println("Me estoy dibujando con valores: " + x + ", " + y + ", " + (x + 2 * radio) + ", " + ( y + 2 * radio ));
+        //System.out.println("Me estoy dibujando con valores: " + x + ", " + y + ", " + (x + 2 * radio) + ", " + ( y + 2 * radio ));
     }
 
     public Color getColor() {

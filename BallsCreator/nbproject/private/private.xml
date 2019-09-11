@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/alexander/Dropbox/Tecnologico/IngenieriaEnComputacion/2019II/DisennoSoftware/Tarea2/Programa/Balls-Creator/BallsCreator/src/bolasencaja/FXMLDocumentController.java</file>
-            <file>file:/home/alexander/Dropbox/Tecnologico/IngenieriaEnComputacion/2019II/DisennoSoftware/Tarea2/Programa/Balls-Creator/BallsCreator/src/model/dibujable/PrototypeFactoryBolasDibujables.java</file>
-            <file>file:/home/alexander/Dropbox/Tecnologico/IngenieriaEnComputacion/2019II/DisennoSoftware/Tarea2/Programa/Balls-Creator/BallsCreator/src/controller/BallsCreatorAdministrator.java</file>
-            <file>file:/home/alexander/Dropbox/Tecnologico/IngenieriaEnComputacion/2019II/DisennoSoftware/Tarea2/Programa/Balls-Creator/BallsCreator/src/ballscreator/MainFrame.java</file>
+            <file>file:/C:/Users/aborbon/Dropbox/Tecnologico/IngenieriaEnComputacion/2019II/DisennoSoftware/Tarea2/Programa/Balls-Creator/BallsCreator/src/ballscreator/MainFrame.java</file>
+            <file>file:/C:/Users/aborbon/Dropbox/Tecnologico/IngenieriaEnComputacion/2019II/DisennoSoftware/Tarea2/Programa/Balls-Creator/BallsCreator/src/model/movible/BolaMovible.java</file>
+            <file>file:/C:/Users/aborbon/Dropbox/Tecnologico/IngenieriaEnComputacion/2019II/DisennoSoftware/Tarea2/Programa/Balls-Creator/BallsCreator/src/controller/BallsCreatorAdministrator.java</file>
+            <file>file:/C:/Users/aborbon/Dropbox/Tecnologico/IngenieriaEnComputacion/2019II/DisennoSoftware/Tarea2/Programa/Balls-Creator/BallsCreator/src/ballscreator/dibujable/PrototypeFactoryBolasDibujables.java</file>
+            <file>file:/C:/Users/aborbon/Dropbox/Tecnologico/IngenieriaEnComputacion/2019II/DisennoSoftware/Tarea2/Programa/Balls-Creator/BallsCreator/src/ballscreator/dibujable/BolaMovibleDibujable.java</file>
+            <file>file:/C:/Users/aborbon/Dropbox/Tecnologico/IngenieriaEnComputacion/2019II/DisennoSoftware/Tarea2/Programa/Balls-Creator/BallsCreator/src/ballscreator/dibujable/JPanelCaja.java</file>
         </group>
     </open-files>
 </project-private>

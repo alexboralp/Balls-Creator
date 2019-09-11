@@ -98,7 +98,7 @@ public class MainFrame extends javax.swing.JFrame {
         cmbDireccion.setMinimumSize(new java.awt.Dimension(70, 21));
         jPanel1.add(cmbDireccion);
 
-        spnVelocidad.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1, 10));
+        spnVelocidad.setModel(new javax.swing.SpinnerNumberModel(0, 0, 10, 1));
         spnVelocidad.setToolTipText("Velocidad inicial de las bolas");
         spnVelocidad.setMinimumSize(new java.awt.Dimension(100, 20));
         spnVelocidad.setPreferredSize(new java.awt.Dimension(70, 21));
@@ -133,6 +133,8 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         int cantidad  = (int) spnCantidad.getValue();
         int velocidad = (int) spnVelocidad.getValue();
+        System.out.println("Velocidad = " + velocidad);
+        System.out.println("Velocidad = " + spnVelocidad.getValue());
         String dir = (String)cmbDireccion.getSelectedItem();
         if ( dir == null || "".equals(dir) )
             dir = "Aleatorio";

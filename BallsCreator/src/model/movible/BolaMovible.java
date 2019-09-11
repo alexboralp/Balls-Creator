@@ -150,15 +150,15 @@ public class BolaMovible extends Bola implements IMovible, Runnable{
                 break;
             case Angulo45:
                 pasox = 1;
-                pasoy = 1;
+                pasoy = -1;
                 break;
             case Angulo90:
                 pasox = 0;
-                pasoy = 1;
+                pasoy = -1;
                 break;
             case Angulo135:
                 pasox = -1;
-                pasoy = 1;
+                pasoy = -1;
                 break;
             case Angulo180:
                 pasox = -1;
@@ -166,15 +166,15 @@ public class BolaMovible extends Bola implements IMovible, Runnable{
                 break;
             case Angulo225:
                 pasox = -1;
-                pasoy = -1;
+                pasoy = 1;
                 break;
             case Angulo270:
                 pasox = 0;
-                pasoy = -1;
+                pasoy = 1;
                 break;
             case Angulo315:
                 pasox = 1;
-                pasoy = -1;
+                pasoy = 1;
                 break;
         }
     }

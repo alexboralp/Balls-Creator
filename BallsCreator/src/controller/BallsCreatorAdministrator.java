@@ -113,7 +113,9 @@ public class BallsCreatorAdministrator implements Runnable{
         
         System.out.println("Tiempo transcurrido del método " + constructor + " en nanosegundos: " + elapsedtime + ", en milisegundos:" + elapsedtime/1000000);
         
-        thread.start();
+        if (!thread.isInterrupted()) {
+            thread.start();
+        }
     }
     
     /*public void setMaxX (int maxX) {
