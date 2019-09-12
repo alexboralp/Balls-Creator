@@ -8,13 +8,8 @@ package controller;
 import ballscreator.MainFrame;
 import ballscreator.dibujable.BolaMovibleDibujable;
 import ballscreator.dibujable.FactoryBolaMovibleDibujable;
-import ballscreator.dibujable.IFactoryBolaMovibleDibujable;
 import ballscreator.dibujable.PrototypeFactoryBolasDibujables;
 import java.awt.Color;
-/*import static java.lang.Thread.sleep;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;*/
 import model.movible.BolaMovible.Direccion;
 import model.punto.Punto;
 import model.util.Util;
@@ -29,11 +24,9 @@ public class BallsCreatorAdministrator implements Runnable{
     private final int tamanno = 5;
     
     private MainFrame mainFrame;
-    //private ArrayList<BolaMovibleDibujable> bolas;
     Thread thread;
 
-    public BallsCreatorAdministrator() {    
-        //bolas = new ArrayList();
+    public BallsCreatorAdministrator() {
         thread = new Thread(this);
     }
     
@@ -70,30 +63,26 @@ public class BallsCreatorAdministrator implements Runnable{
             BolaMovibleDibujable bola;
             
             if ( constructor.equals(Factories.FACTORY.toString()) ){
-                System.out.println("Creando con Factory");
-                IFactoryBolaMovibleDibujable fact = new FactoryBolaMovibleDibujable();
+                //System.out.println("Creando con Factory");
                 
-                bola = (BolaMovibleDibujable)fact.construirBolaMovibleDibujable(
+                bola = FactoryBolaMovibleDibujable.construirBolaMovibleDibujable(
                             Util.randomInt(mainFrame.getminX(), mainFrame.getmaxX()), 
                             Util.randomInt(mainFrame.getminY(), mainFrame.getmaxY()),
                             tamanno, //Util.randomInt(minTamanno, maxTamanno), 
                             vel, dir, color);
                 
             }else if ( constructor.equals(Factories.PROTOTYPE.toString()) ){
-                System.out.println("Creando con Prototype");
+                //System.out.println("Creando con Prototype");
                 
                 bola = PrototypeFactoryBolasDibujables.getPrototype(nombrePrototipo).deepclone();
                         
                 bola.setCentro(new Punto(Util.randomInt(mainFrame.getminX(), mainFrame.getmaxX()), 
                             Util.randomInt(mainFrame.getminY(), mainFrame.getmaxY())));
-                //bola.setRadio(tamanno); //Util.randomInt(minTamanno, maxTamanno));
                 if ( velocidad == 0 ) {
                     bola.setVelocidad(vel);
                 }
-                //bola.setDireccion(dir);
-                //bola.setColor(color);
             }else{
-                System.out.println("Creando con new");
+                //System.out.println("Creando con new");
                 bola = new BolaMovibleDibujable(
                             Util.randomInt(mainFrame.getminX(), mainFrame.getmaxX()), 
                             Util.randomInt(mainFrame.getminY(), mainFrame.getmaxY()),
@@ -103,7 +92,6 @@ public class BallsCreatorAdministrator implements Runnable{
             bola.setMaxx(mainFrame.getmaxX());
             bola.setMaxy(mainFrame.getmaxY());
             
-            //bolas.add(bola);
             new Thread(bola).start();
             mainFrame.addBall(bola);
         }
@@ -113,37 +101,20 @@ public class BallsCreatorAdministrator implements Runnable{
         
         System.out.println("Tiempo transcurrido del método " + constructor + " en nanosegundos: " + elapsedtime + ", en milisegundos:" + elapsedtime/1000000);
         
-        if (!thread.isInterrupted()) {
+        if (thread.isInterrupted() || !thread.isAlive()) {
             thread.start();
         }
     }
-    
-    /*public void setMaxX (int maxX) {
-        for (BolaMovibleDibujable bola : bolas) {
-            bola.setMaxx(maxX);
-        }
-    }
-    
-    public void setMaxY (int maxY) {
-        for (BolaMovibleDibujable bola : bolas) {
-            bola.setMaxy(maxY);
-        }
-    }*/
 
     @Override
     public void run() {
         while(true) {
             mainFrame.dibujarBolas();
-            /*try {
-                sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(BallsCreatorAdministrator.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
         }
     }
     
     private Direccion strToDireccion(String dir) {
-        Direccion direccion = Direccion.Angulo0;
+        Direccion direccion;
         
         switch (dir) {
             case "Aleatorio":

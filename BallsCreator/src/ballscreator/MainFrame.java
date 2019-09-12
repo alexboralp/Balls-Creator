@@ -32,22 +32,6 @@ public class MainFrame extends javax.swing.JFrame {
         pnlDraw = new JPanelCaja();
         pnlDraw.setDoubleBuffered(true);
         pnlDraw.setPreferredSize(new java.awt.Dimension(800, 600));
-        /*pnlDraw.addComponentListener(new java.awt.event.ComponentAdapter() {
-            @Override
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                pnlDrawComponentResized(evt);
-            }
-        });*/
-        /*javax.swing.GroupLayout pnlDrawLayout = new javax.swing.GroupLayout(pnlDraw);
-        pnlDraw.setLayout(pnlDrawLayout);
-        pnlDrawLayout.setHorizontalGroup(
-            pnlDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 746, Short.MAX_VALUE)
-        );
-        pnlDrawLayout.setVerticalGroup(
-            pnlDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );*/
 
         getContentPane().add(pnlDraw, java.awt.BorderLayout.CENTER);
         pnlDraw.setMaxX(pnlDraw.getWidth());
@@ -133,8 +117,6 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         int cantidad  = (int) spnCantidad.getValue();
         int velocidad = (int) spnVelocidad.getValue();
-        System.out.println("Velocidad = " + velocidad);
-        System.out.println("Velocidad = " + spnVelocidad.getValue());
         String dir = (String)cmbDireccion.getSelectedItem();
         if ( dir == null || "".equals(dir) )
             dir = "Aleatorio";
@@ -142,12 +124,6 @@ public class MainFrame extends javax.swing.JFrame {
         ballsCreatorAdministrator.createBalls(cantidad, color, dir, velocidad, metodo);
     }//GEN-LAST:event_btnCrearActionPerformed
 
-    /*private void pnlDrawComponentResized(java.awt.event.ComponentEvent evt) {                                         
-        // TODO add your handling code here:
-        
-        pnlDraw.setMaxX(pnlDraw.getWidth());
-        pnlDraw.setMaxX(pnlDraw.getHeight());
-    }  */
     
     /**
      * @param args the command line arguments
@@ -186,10 +162,6 @@ public class MainFrame extends javax.swing.JFrame {
     
     public void setAdministrator(BallsCreatorAdministrator ballsCreatorAdministrator) {
         this.ballsCreatorAdministrator = ballsCreatorAdministrator;
-        /*if (pnlDraw != null) {
-            ballsCreatorAdministrator.setMaxX(pnlDraw.getWidth());
-            ballsCreatorAdministrator.setMaxX(pnlDraw.getHeight());
-        }*/
     }
 
     public synchronized void dibujarBolas() {
