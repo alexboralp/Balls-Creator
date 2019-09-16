@@ -8,15 +8,19 @@ package ballscreator.dibujable;
 import java.awt.Color;
 import java.awt.Graphics;
 import model.movible.BolaMovible;
+import model.pool.IPooledObject;
 import model.punto.Punto;
 
 /**
  *
  * @author aborbon
  */
-public class BolaMovibleDibujable extends BolaMovible implements IDibujable{
+public class BolaMovibleDibujable extends BolaMovible implements IDibujable, IPooledObject{
     
     Color color;
+
+    public BolaMovibleDibujable() {
+    }
 
     public BolaMovibleDibujable(Punto centro, int radio, int velocidad, Direccion direccion, Color color) {
         super(centro, radio, velocidad, direccion);
@@ -61,6 +65,16 @@ public class BolaMovibleDibujable extends BolaMovible implements IDibujable{
     @Override
     public BolaMovibleDibujable deepclone() {
         return new BolaMovibleDibujable(this.getCentro().deepclone(), this.getRadio(), this.getVelocidad(), this.getDireccion(), color);
+    }
+
+    @Override
+    public boolean validate() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void invalidate() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -10,8 +10,14 @@ import ballscreator.dibujable.BolaMovibleDibujable;
 import ballscreator.dibujable.FactoryBolaMovibleDibujable;
 import ballscreator.dibujable.PrototypeFactoryBolasDibujables;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.builder.BallBuilder;
 import model.movible.BolaMovible.Direccion;
+import model.pool.ExecutorTask;
+import model.pool.ExecutorTaskFactory;
+import model.pool.ExecutorThreadPool;
+import model.pool.PoolException;
 import model.punto.Punto;
 import model.util.Util;
 
@@ -43,13 +49,15 @@ public class BallsCreatorAdministrator implements Runnable{
         return mainFrame;
     }
     
-    public void createBalls(int cantidad, Color color, String direccion, int velocidad, String constructor) {
+    public void createBalls(int cantidad, Color color, String direccion, int velocidad, String constructor) throws PoolException {
         long starttime = System.nanoTime();
         
         Direccion dir = strToDireccion(direccion);
         
         String nombrePrototipo = "" + cantidad + color.toString() + direccion + velocidad + constructor;
         PrototypeFactoryBolasDibujables.addPrototype(nombrePrototipo, new BolaMovibleDibujable(0,0,tamanno,velocidad,dir, color));
+        
+        final ExecutorThreadPool pool = new ExecutorThreadPool(0, cantidad, 1000*100, new ExecutorTaskFactory());
         
         int vel = velocidad;
         
@@ -79,11 +87,11 @@ public class BallsCreatorAdministrator implements Runnable{
                         
                 bola.setCentro(new Punto(Util.randomInt(mainFrame.getminX(), mainFrame.getmaxX()), 
                             Util.randomInt(mainFrame.getminY(), mainFrame.getmaxY())));
-                if ( velocidad == 0 ) {
+                /*if ( velocidad == 0 ) {
                     bola.setVelocidad(vel);
-                }
+                }*/
             }else if ( constructor.equals(Factories.BUILDER.toString()) ){
-                System.out.println("Creando con Builder");
+                //System.out.println("Creando con Builder");
                 //BolaMovibleDibujable(Punto centro, int radio, int velocidad, Direccion direccion, Color color)
                 
                 bola = new BallBuilder()
@@ -94,6 +102,16 @@ public class BallsCreatorAdministrator implements Runnable{
                         .setDireccion(dir)
                         .setColor(color)
                         .build();
+            }else if ( constructor.equals(Factories.POOL.toString()) ){
+
+                    bola = pool.getObject();
+                    bola.setCentro(new Punto(Util.randomInt(mainFrame.getminX(), mainFrame.getmaxX()), 
+                            Util.randomInt(mainFrame.getminY(), mainFrame.getmaxY())));
+                    bola.setRadio(tamanno);
+                    bola.setVelocidad(vel);
+                    bola.setDireccion(dir);
+                    bola.setColor(color);
+                
             }else{
                 //System.out.println("Creando con new");
                 bola = new BolaMovibleDibujable(
@@ -102,11 +120,12 @@ public class BallsCreatorAdministrator implements Runnable{
                             tamanno, //Util.randomInt(minTamanno, maxTamanno), 
                             vel, dir, color);
             }
-            bola.setMaxx(mainFrame.getmaxX());
-            bola.setMaxy(mainFrame.getmaxY());
+                            
+                bola.setMaxx(mainFrame.getmaxX());
+                bola.setMaxy(mainFrame.getmaxY());
             
-            new Thread(bola).start();
-            mainFrame.addBall(bola);
+                new Thread(bola).start();
+                mainFrame.addBall(bola);
         }
         
         long endtime = System.nanoTime();
