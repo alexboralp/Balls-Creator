@@ -10,6 +10,7 @@ import ballscreator.dibujable.BolaMovibleDibujable;
 import ballscreator.dibujable.FactoryBolaMovibleDibujable;
 import ballscreator.dibujable.PrototypeFactoryBolasDibujables;
 import java.awt.Color;
+import model.builder.BallBuilder;
 import model.movible.BolaMovible.Direccion;
 import model.punto.Punto;
 import model.util.Util;
@@ -81,6 +82,18 @@ public class BallsCreatorAdministrator implements Runnable{
                 if ( velocidad == 0 ) {
                     bola.setVelocidad(vel);
                 }
+            }else if ( constructor.equals(Factories.BUILDER.toString()) ){
+                System.out.println("Creando con Builder");
+                //BolaMovibleDibujable(Punto centro, int radio, int velocidad, Direccion direccion, Color color)
+                
+                bola = new BallBuilder()
+                        .setCentro(new Punto(Util.randomInt(mainFrame.getminX(), mainFrame.getmaxX()), 
+                            Util.randomInt(mainFrame.getminY(), mainFrame.getmaxY())))
+                        .setRadio(tamanno)
+                        .setVelocidad(vel)
+                        .setDireccion(dir)
+                        .setColor(color)
+                        .build();
             }else{
                 //System.out.println("Creando con new");
                 bola = new BolaMovibleDibujable(

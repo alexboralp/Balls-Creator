@@ -114,6 +114,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnColorActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+
         // TODO add your handling code here:
         int cantidad  = (int) spnCantidad.getValue();
         int velocidad = (int) spnVelocidad.getValue();
